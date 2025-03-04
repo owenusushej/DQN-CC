@@ -8,10 +8,8 @@ from modules.network_env import NetworkMonitor
 from modules.dqn_model_tf import DQNTF
 
 class DQNSender(object):
-    def __init__(self, config_path='config.yaml'):
-        with open(config_path) as f:
-            config = yaml.safe_load(f)
-        self.sender = SocketSender(config['receiver_ip'], config['receiver_port'])
+    def __init__(self, receiver_ip, receiver_port):
+        self.sender = SocketSender(receiver_ip, receiver_port)
         self.agent = DQNTF(state_dim=4, action_dim=5)
         self.monitor = NetworkMonitor(self.sender)
         self.total_steps = 0
